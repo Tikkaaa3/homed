@@ -6,6 +6,7 @@ import Signup from './pages/Signup';
 import Onboarding from './pages/Onboarding';
 import Dashboard from './pages/Dashboard';
 import Chores from './pages/Chores';
+import ShoppingLists from './pages/ShoppingLists';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/chores" element={<Chores />} />
+          <Route path="/shopping-lists" element={<ShoppingLists />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

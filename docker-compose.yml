@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: homed-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-houseapp}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-houseapp}
+      POSTGRES_DB: ${POSTGRES_DB:-houseapp_dev}
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: homed-backend
+    ports:
+      - "3000:3000"
+    environment:
+      # Note the host is 'db' (the service name), not localhost
+      DATABASE_URL: postgresql://houseapp:houseapp@db:5432/houseapp_dev?schema=public
+      JWT_SECRET: ${JWT_SECRET}
+    volumes:
+      - ./backend:/app
+      - /app/node_modules # Prevents host node_modules from overwriting container's
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: homed-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:3000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

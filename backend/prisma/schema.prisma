@@ -1,13 +1,178 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model User {
+  id           String @id @default(cuid())
+  email        String @unique
+  displayName  String
+  passwordHash String
+
+  // A user can only belong to one house at a time
+  houseId String?
+  house   House?  @relation(fields: [houseId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  choresAssigned   Chore[]           @relation("Chore_assignedTo")
+  choreCompletions ChoreCompletion[]
+
+  @@index([houseId])
+}
+
+model House {
+  id       String @id @default(cuid())
+  name     String
+  // Unique 6-8 character code for joining
+  joinCode String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users         User[]
+  items         Item[]
+  shoppingLists ShoppingList[]
+  chores        Chore[]
+  recipes       Recipe[]
+}
+
+model Item {
+  id      String @id @default(cuid())
+  houseId String
+  house   House  @relation(fields: [houseId], references: [id], onDelete: Cascade)
+
+  name     String
+  category String
+  unit     String
+  tags     String[] @default([])
+
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  shoppingListItems ShoppingListItem[]
+  recipeIngredients RecipeIngredient[]
+
+  // Prevents duplicate items within the same household
+  @@unique([houseId, name])
+  @@index([houseId])
+}
+
+model ShoppingList {
+  id      String @id @default(cuid())
+  houseId String
+  house   House  @relation(fields: [houseId], references: [id], onDelete: Cascade)
+
+  title String
+  items ShoppingListItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([houseId, title])
+  @@index([houseId])
+}
+
+model ShoppingListItem {
+  id     String       @id @default(cuid())
+  listId String
+  list   ShoppingList @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  itemId String
+  item   Item   @relation(fields: [itemId], references: [id], onDelete: Restrict)
+
+  quantity     Decimal @db.Decimal(10, 2)
+  unitOverride String?
+  note         String?
+  isChecked    Boolean @default(false)
+  checkedById  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([listId, itemId])
+  @@index([listId, isChecked])
+}
+
+enum ChoreFrequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+model Chore {
+  id      String @id @default(cuid())
+  houseId String
+  house   House  @relation(fields: [houseId], references: [id], onDelete: Cascade)
+
+  title        String
+  frequency    ChoreFrequency
+  assignedToId String?
+  assignedTo   User?          @relation("Chore_assignedTo", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  completions ChoreCompletion[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([houseId])
+  @@index([houseId, frequency])
+}
+
+model ChoreCompletion {
+  id      String @id @default(cuid())
+  choreId String
+  chore   Chore  @relation(fields: [choreId], references: [id], onDelete: Cascade)
+
+  completedById String
+  completedBy   User   @relation(fields: [completedById], references: [id], onDelete: Restrict)
+
+  note        String?
+  completedAt DateTime @default(now())
+
+  @@index([choreId, completedAt])
+}
+
+enum RecipeType {
+  MEAL
+  DESSERT
+}
+
+model Recipe {
+  id      String @id @default(cuid())
+  houseId String
+  house   House  @relation(fields: [houseId], references: [id], onDelete: Cascade)
+
+  title String
+  type  RecipeType
+  tags  String[]   @default([])
+  notes String?
+  text  String?
+
+  ingredients RecipeIngredient[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([houseId, type])
+}
+
+model RecipeIngredient {
+  id       String @id @default(cuid())
+  recipeId String
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  itemId String
+  item   Item   @relation(fields: [itemId], references: [id], onDelete: Restrict)
+
+  quantity     Decimal @db.Decimal(10, 2)
+  unitOverride String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([recipeId, itemId])
 }

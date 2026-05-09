@@ -7,6 +7,7 @@ import Onboarding from './pages/Onboarding';
 import Dashboard from './pages/Dashboard';
 import Chores from './pages/Chores';
 import ShoppingLists from './pages/ShoppingLists';
+import Recipes from './pages/Recipes';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/chores" element={<Chores />} />
           <Route path="/shopping-lists" element={<ShoppingLists />} />
+          <Route path="/recipes" element={<Recipes />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

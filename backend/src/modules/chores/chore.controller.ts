@@ -67,6 +67,8 @@ export const createChore = async (req: Request, res: Response) => {
   }
 
   const { title, frequency, assignedToId } = req.body;
+  const normalizedFrequency =
+    typeof frequency === 'string' ? frequency.toUpperCase() : frequency;
 
   try {
     const houseId = await getUserHouseId(userId);
@@ -88,7 +90,7 @@ export const createChore = async (req: Request, res: Response) => {
     const chore = await prisma.chore.create({
       data: {
         title,
-        frequency,
+        frequency: normalizedFrequency,
         houseId,
         assignedToId: assignedToId || null,
       },

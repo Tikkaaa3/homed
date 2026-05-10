@@ -97,9 +97,10 @@ model ShoppingListItem {
   @@index([listId, isChecked])
 }
 
-enum ChoreFrequency {
+enum Frequency {
   DAILY
   WEEKLY
+  BIWEEKLY
   MONTHLY
 }
 
@@ -109,7 +110,7 @@ model Chore {
   house   House  @relation(fields: [houseId], references: [id], onDelete: Cascade)
 
   title        String
-  frequency    ChoreFrequency
+  frequency    Frequency
   assignedToId String?
   assignedTo   User?          @relation("Chore_assignedTo", fields: [assignedToId], references: [id], onDelete: SetNull)
 

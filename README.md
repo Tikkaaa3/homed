@@ -2,7 +2,7 @@
 
 A full-stack household management web application that helps roommates and families coordinate shared living. Homed brings together chore tracking, collaborative shopping lists, a shared recipe book, and a pantry item catalog — all scoped to a shared household that members create or join via an invite code.
 
-![License](https://img.shields.io/github/license/Tikkaaa3/homed?style=for-the-badge&cacheSeconds=60)
+![License](https://img.shields.io/github/license/Tikkaaa3/homed?style=for-the-badge&cacheSeconds=1)
 ![Last Commit](https://img.shields.io/github/last-commit/Tikkaaa3/homed?style=for-the-badge)
 ![Repo Size](https://img.shields.io/github/repo-size/Tikkaaa3/homed?style=for-the-badge&cacheSeconds=60)
 

@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+:root {
+  /* Tells the browser's default UI (scrollbars, etc.) to match your OS theme */
+  color-scheme: light dark;
+}
+
 html,
 body,
 #root {
@@ -7,13 +12,42 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #f9fafb; /* Light mode background */
 }
 
+/* Base Light Mode Styles */
+body {
+  background-color: #f9fafb; /* gray-50 */
+  color: #111827; /* gray-900 */
+}
+
+input,
+select,
+textarea {
+  background-color: #ffffff;
+  color: #111827;
+  border: 1px solid #d1d5db; /* gray-300 */
+}
+
+input::placeholder {
+  color: #9ca3af; /* gray-400 */
+}
+
+/* Base Dark Mode Styles */
 @media (prefers-color-scheme: dark) {
-  html,
-  body,
-  #root {
-    background-color: #111827; /* Dark mode background */
+  body {
+    background-color: #111827; /* gray-900 */
+    color: #f3f4f6; /* gray-100 */
+  }
+
+  input,
+  select,
+  textarea {
+    background-color: #1f2937 !important; /* gray-800 */
+    color: #f3f4f6 !important; /* gray-100 */
+    border: 1px solid #374151 !important; /* gray-700 */
+  }
+
+  input::placeholder {
+    color: #9ca3af !important; /* gray-400 */
   }
 }

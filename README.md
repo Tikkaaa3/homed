@@ -2,44 +2,24 @@
 
 A full-stack household management web application that helps roommates and families coordinate shared living. Homed brings together chore tracking, collaborative shopping lists, a shared recipe book, and a pantry item catalog — all scoped to a shared household that members create or join via an invite code.
 
-## 🧾 Project Info
-
 ![License](https://img.shields.io/github/license/Tikkaaa3/homed?style=for-the-badge&cacheSeconds=60)
 ![Last Commit](https://img.shields.io/github/last-commit/Tikkaaa3/homed?style=for-the-badge)
 ![Repo Size](https://img.shields.io/github/repo-size/Tikkaaa3/homed?style=for-the-badge&cacheSeconds=60)
-
----
-
-## 🧱 Frontend
-
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-Frontend-646CFF?logo=vite&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC?logo=tailwindcss&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-v7-CA4245?logo=reactrouter&logoColor=white)
-
----
-
-## ⚙️ Backend
-
 ![Node.js](https://img.shields.io/badge/Node.js-22+-339933?logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql&logoColor=white)
-
----
-
-## 🔐 Auth & Security
-
 ![JWT](https://img.shields.io/badge/Auth-JWT-000000?logo=jsonwebtokens&logoColor=white)
 ![Argon2](https://img.shields.io/badge/Security-Argon2-5A0FC8)
-
----
-
-## 🧰 Tooling & Infra
-
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
 ![Axios](https://img.shields.io/badge/HTTP-Axios-5A29E4?logo=axios&logoColor=white)
+
+---
 
 ## Table of Contents
 

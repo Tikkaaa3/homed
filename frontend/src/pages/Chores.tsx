@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import client from '../api/client';
 import { useAuth } from '../context/AuthContext';
-import { CheckCircle, User, Calendar } from 'lucide-react';
+import { CheckCircle, User, Calendar, Trash2 } from 'lucide-react';
 
 interface Member {
   id: string;
@@ -119,6 +119,18 @@ const Chores = () => {
     }
   };
 
+  const handleDeleteChore = async (choreId: string) => {
+    const previousChores = [...chores];
+    setChores((prev) => prev.filter((c) => c.id !== choreId));
+
+    try {
+      await client.delete(`/chores/${choreId}`);
+    } catch {
+      setChores(previousChores);
+      alert('Failed to delete chore');
+    }
+  };
+
   const getLastCompleted = (chore: Chore) => {
     if (chore.completions.length === 0) return null;
     return chore.completions[0].completedAt;
@@ -211,10 +223,19 @@ const Chores = () => {
               key={chore.id}
               className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4"
             >
-              <div className="space-y-1">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  {chore.title}
-                </h3>
+              <div className="space-y-1 flex-1">
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    {chore.title}
+                  </h3>
+                  <button
+                    onClick={() => handleDeleteChore(chore.id)}
+                    className="text-gray-400 hover:text-red-500 transition shrink-0"
+                    title="Delete chore"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
                 <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                   <span className="flex items-center gap-1">
                     <Calendar size={14} />

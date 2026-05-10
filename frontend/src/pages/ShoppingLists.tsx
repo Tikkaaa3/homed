@@ -213,6 +213,20 @@ const ShoppingLists = () => {
     }
   };
 
+  const handleDeleteList = async (listId: string) => {
+    if (!window.confirm('Are you sure you want to delete this shopping list?')) return;
+
+    const previousLists = [...lists];
+    setLists((prev) => prev.filter((l) => l.id !== listId));
+
+    try {
+      await client.delete(`/shopping-lists/${listId}`);
+    } catch {
+      setLists(previousLists);
+      alert('Failed to delete shopping list');
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -258,9 +272,18 @@ const ShoppingLists = () => {
               key={list.id}
               className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm space-y-4"
             >
-              <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                {list.title}
-              </h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                  {list.title}
+                </h2>
+                <button
+                  onClick={() => handleDeleteList(list.id)}
+                  className="text-gray-400 hover:text-red-500 transition"
+                  title="Delete list"
+                >
+                  <Trash2 size={18} />
+                </button>
+              </div>
 
               <div className="space-y-2">
                 {list.items.length === 0 ? (

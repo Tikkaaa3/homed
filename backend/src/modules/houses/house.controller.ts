@@ -118,3 +118,36 @@ export const getMembers = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Failed to fetch members' });
   }
 };
+
+export const getCurrentHouse = async (req: Request, res: Response) => {
+  const userId = req.userId;
+  if (!userId) {
+    res.status(401).json({ message: 'Unauthorized' });
+    return;
+  }
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { houseId: true },
+    });
+
+    if (!user?.houseId) {
+      res.status(400).json({ message: 'User is not part of a house' });
+      return;
+    }
+
+    const house = await prisma.house.findUnique({
+      where: { id: user.houseId },
+    });
+
+    if (!house) {
+      res.status(404).json({ message: 'House not found' });
+      return;
+    }
+
+    res.json(house);
+  } catch {
+    res.status(500).json({ message: 'Failed to fetch house' });
+  }
+};

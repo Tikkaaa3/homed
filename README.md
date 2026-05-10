@@ -5,6 +5,8 @@ A full-stack household management web application that helps roommates and famil
 ![License](https://img.shields.io/github/license/Tikkaaa3/homed?style=for-the-badge&cacheSeconds=60)
 ![Last Commit](https://img.shields.io/github/last-commit/Tikkaaa3/homed?style=for-the-badge)
 ![Repo Size](https://img.shields.io/github/repo-size/Tikkaaa3/homed?style=for-the-badge&cacheSeconds=60)
+
+
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-Frontend-646CFF?logo=vite&logoColor=white)
